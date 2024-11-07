@@ -1,20 +1,31 @@
+/* eslint-disable no-unused-vars */
 import { Slider } from "@/components/ui/slider";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ColorPickerController from "./ColorPickerController";
+import { UpdateStorageContext } from "@/context/UpdateStorageContext";
 
 function BackgroundController() {
-  const [rounded, setRounded] = useState(0);
-  const [padding, setPadding] = useState(40);
-  const [color, setColor] = useState("#000");
   const storageValue = JSON.parse(localStorage.getItem("value"));
+  const [rounded, setRounded] = useState(
+    storageValue ? storageValue?.bgRounded : 0
+  );
+  const [padding, setPadding] = useState(
+    storageValue ? storageValue?.bgPadding : 0
+  );
+  const [color, setColor] = useState(
+    storageValue ? storageValue?.bgColor : "#000"
+  );
+
+  const { updateStorage, setUpdateStorage } = useContext(UpdateStorageContext);
 
   useEffect(() => {
     const updatedValue = {
       ...storageValue,
       bgRounded: rounded,
-      bgRotate: padding,
+      bgPadding: padding,
       bgColor: color
     };
+    setUpdateStorage(updatedValue);
     localStorage.setItem("value", JSON.stringify(updatedValue));
   });
   return (
