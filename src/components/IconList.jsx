@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable react/jsx-key */
 import {
   Dialog,
   DialogContent,
@@ -41,6 +40,7 @@ function IconList({ selectedIcon }) {
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 overflow-auto h-[400px] p-6">
                 {iconList.map((icon, index) => (
                   <div
+                    key={index}
                     className="border p-3 flex rounded-sm items-center justify-center cursor-pointer"
                     onClick={() => {
                       selectedIcon(icon);
@@ -48,7 +48,7 @@ function IconList({ selectedIcon }) {
                       setIcon(icon);
                     }}
                   >
-                    <Icon key={index} name={icon} color={"#000"} size={20} />
+                    <Icon name={icon} color={"#000"} size={20} />
                   </div>
                 ))}
               </div>
