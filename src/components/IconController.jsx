@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import { Smile } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { useEffect, useState } from "react";
 import ColorPickerController from "./ColorPickerController";
 import { useContext } from "react";
 import { UpdateStorageContext } from "@/context/UpdateStorageContext";
+import IconList from "./IconList";
 
 function IconController() {
   const storageValue = JSON.parse(localStorage.getItem("value"));
@@ -16,7 +16,7 @@ function IconController() {
   const [color, setColor] = useState(
     storageValue ? storageValue?.iconColor : "#fff"
   );
-
+  const [icon, setIcon] = useState(storageValue ? storageValue?.icon : "Smile");
   const { updateStorage, setUpdateStorage } = useContext(UpdateStorageContext);
 
   useEffect(() => {
@@ -25,19 +25,15 @@ function IconController() {
       iconSize: size,
       iconRotate: rotate,
       iconColor: color,
-      icon: "Smile"
+      icon: icon
     };
     setUpdateStorage(updatedValue);
     localStorage.setItem("value", JSON.stringify(updatedValue));
-  }, [size, rotate, color, storageValue]);
+  }, [size, rotate, color, icon, storageValue]);
   return (
     <div>
       <div>
-        <label>Icon</label>
-
-        <div className="p-3 cursor-pointer bg-gray-400 rounded-md w-[50px] h-[50px]">
-          <Smile />
-        </div>
+        <IconList selectedIcon={(icon) => setIcon(icon)} />
         <div className="py-2">
           <label className="p-2 flex justify-between items-center">
             Size <span> {size} px</span>
